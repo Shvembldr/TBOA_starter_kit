@@ -1,5 +1,4 @@
-import { PRNG } from '../PRNG'
-
+const { calculateFeatures } = require('./features')
 if (process.env.NODE_ENV === 'development') {
   const genTokenData = (projectNum) => {
     let data = {}
@@ -21,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
 
   generateSeed()
 
-  window.addEventListener('click', (e) => {
+  window.addEventListener('click', () => {
     generateSeed()
     reset()
   })
@@ -46,27 +45,21 @@ if (window.innerHeight * 0.75 >= window.innerWidth) {
   ww = window.innerHeight * 0.75
 }
 
-const { value, chance, bool, range, rangeFloor, pick, weighted } = PRNG(hash)
-
 let reset
-
-const variables = {}
-
-const features = {}
 
 let c
 function setup() {
   c = createCanvas(ww, wh)
 
   reset = () => {
-    variables.sw = range(0, 50) * M
-    features.color = `rgb(100, 100, ${rangeFloor(0, 255)})`
+    // eslint-disable-next-line no-undef
+    const { color, sw } = calculateFeatures(tokenData, M)
 
     background(255)
 
     push()
-    strokeWeight(variables.sw)
-    fill(features.color)
+    strokeWeight(sw)
+    fill(color)
     circle(width / 2, height / 2, DIM * 0.5)
     pop()
   }

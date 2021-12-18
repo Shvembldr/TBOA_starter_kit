@@ -15,8 +15,6 @@ fs.readdir(buildPath, (err, files) => {
     await splitFile
       .splitFileBySize(`${buildPath}/${file}`, 10000)
       .then((names) => {
-        console.log(names)
-
         names.forEach((name, i) => {
           fs.rename(name, `${buildPath}/part${i}`, function (err) {
             if (err) console.log('ERROR: ' + err)

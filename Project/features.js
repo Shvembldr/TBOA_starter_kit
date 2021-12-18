@@ -1,4 +1,17 @@
-export const PRNG = (hash) => {
+export const calculateFeatures = (tokenData, M) => {
+  const { value, chance, bool, range, rangeFloor, pick, weighted } = PRNG(
+    tokenData.hash
+  )
+
+  const features = {}
+
+  features.color = `rgb(100, 100, ${rangeFloor(0, 255)})`
+  features.sw = range(0, 50) * M
+
+  return features
+}
+
+const PRNG = (hash) => {
   /* Algorithm "xor128" from p. 5 of Marsaglia, "Xorshift RNGs" */
   /* Adapted by Piter Pasma */
 
