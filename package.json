@@ -1,0 +1,22 @@
+{
+  "name": "p5-builder",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "rm -rf dist && parcel p5project/index.html --port 4000 --no-hmr",
+    "build": "rm -rf build && parcel build p5project/index.html --no-source-maps --dist-dir build && node ./build.js"
+  },
+  "devDependencies": {
+    "@parcel/optimizer-esbuild": "^2.0.0",
+    "@parcel/transformer-glsl": "^2.0.0",
+    "eslint": "8.1.0",
+    "eslint-config-p5js": "1.1.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "parcel": "^2.0.0",
+    "parcel-transformer-naming": "link:./parcel-transformer-naming",
+    "prettier": "2.4.1",
+    "split-file": "^2.3.0",
+    "terser": "^5.9.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "parcel-transformer-naming",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "engines": {
+    "parcel": "2"
+  },
+  "devDependencies": {
+    "@parcel/plugin": "^2.0.0"
+  }
+}
