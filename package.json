@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "rm -rf dist && parcel p5project/index.html --port 4000 --no-hmr",
-    "build": "rm -rf build && parcel build p5project/index.html --no-source-maps --dist-dir build && node ./build.js"
+    "start": "rm -rf dist && parcel Project/index.html --port 4000 --no-hmr",
+    "build": "rm -rf build && parcel build Project/index.html --no-source-maps --dist-dir build && node ./build.js"
   },
   "devDependencies": {
     "@parcel/optimizer-esbuild": "^2.0.0",

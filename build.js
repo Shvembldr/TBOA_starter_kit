@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 
 const buildPath = path.join(__dirname, 'build')
-const testPath = path.join(__dirname, 'test')
+const reviewPath = path.join(__dirname, 'Review')
 
 fs.unlink(`${buildPath}/index.html`, function (err) {
   if (err) console.log('ERROR: ' + err)
@@ -26,8 +26,12 @@ fs.readdir(buildPath, (err, files) => {
       .catch((err) => {
         console.log('Error: ', err)
       })
-    fs.rename(`${buildPath}/${file}`, `${testPath}/script.js`, function (err) {
-      if (err) console.log('ERROR: ' + err)
-    })
+    fs.rename(
+      `${buildPath}/${file}`,
+      `${reviewPath}/script.js`,
+      function (err) {
+        if (err) console.log('ERROR: ' + err)
+      }
+    )
   })
 })
