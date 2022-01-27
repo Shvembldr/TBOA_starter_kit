@@ -1,4 +1,6 @@
-const { calculateFeatures } = require('./features')
+const { PRNG } = require('./PRNG')
+const { palettes } = require('./palettes')
+
 if (process.env.NODE_ENV === 'development') {
   const genTokenData = (projectNum) => {
     let data = {}
@@ -37,12 +39,14 @@ let M = DIM / DEFAULT_SIZE
 
 let ww, wh
 
-if (window.innerHeight * 0.75 >= window.innerWidth) {
+const ratio = 3 / 4
+
+if (window.innerHeight * ratio >= window.innerWidth) {
   ww = window.innerWidth
-  wh = window.innerWidth / 0.75
+  wh = window.innerWidth / ratio
 } else {
   wh = window.innerHeight
-  ww = window.innerHeight * 0.75
+  ww = window.innerHeight * ratio
 }
 
 let reset
@@ -50,16 +54,31 @@ let reset
 let c
 function setup() {
   c = createCanvas(ww, wh)
+  strokeWeight(M)
 
   reset = () => {
     // eslint-disable-next-line no-undef
-    const { color, sw } = calculateFeatures(tokenData, M)
+
+    const { rnd, range, rangeFloor, pick, pickSome, shuffleArray } = PRNG(
+      // eslint-disable-next-line no-undef
+      tokenData.hash
+    )
+    const calculateFeatures = () => {
+      const features = {}
+
+      const paletteIndex = rangeFloor(palettes.length - 1)
+
+      features.palette = shuffleArray(palettes[paletteIndex])
+
+      return features
+    }
+
+    const { palette } = calculateFeatures()
 
     background(255)
 
     push()
-    strokeWeight(sw)
-    fill(color)
+    fill(palette[0])
     circle(width / 2, height / 2, DIM * 0.5)
     pop()
   }
@@ -105,12 +124,12 @@ function windowResized() {
 
   let ww, wh
 
-  if (window.innerHeight * 0.75 >= window.innerWidth) {
+  if (window.innerHeight * ratio >= window.innerWidth) {
     ww = window.innerWidth
-    wh = window.innerWidth / 0.75
+    wh = window.innerWidth / ratio
   } else {
     wh = window.innerHeight
-    ww = window.innerHeight * 0.75
+    ww = window.innerHeight * ratio
   }
 
   CS.position = 'absolute'
