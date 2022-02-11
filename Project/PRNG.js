@@ -68,6 +68,56 @@ export const PRNG = (hash) => {
     return ret
   }
 
+  const defined = function () {
+    for (var i = 0; i < arguments.length; i++) {
+      if (arguments[i] !== undefined) return arguments[i]
+    }
+  }
+
+  const onCircle = (radius, out) => {
+    radius = defined(radius, 1)
+    out = out || []
+    var theta = rnd() * 2.0 * Math.PI
+    out[0] = radius * Math.cos(theta)
+    out[1] = radius * Math.sin(theta)
+    return out
+  }
+
+  const insideCircle = (radius, out) => {
+    radius = defined(radius, 1)
+    out = out || []
+    onCircle(1, out)
+    var r = radius * Math.sqrt(rnd())
+    out[0] *= r
+    out[1] *= r
+    return out
+  }
+
+  let _hasNextGaussian = false
+  let _nextGaussian = null
+
+  const gaussian = (mean, standardDerivation) => {
+    if (_hasNextGaussian) {
+      _hasNextGaussian = false
+      let result = _nextGaussian
+      _nextGaussian = null
+      return mean + standardDerivation * result
+    } else {
+      let v1 = 0
+      let v2 = 0
+      let s = 0
+      do {
+        v1 = rnd() * 2 - 1 // between -1 and 1
+        v2 = rnd() * 2 - 1 // between -1 and 1
+        s = v1 * v1 + v2 * v2
+      } while (s >= 1 || s === 0)
+      let multiplier = Math.sqrt((-2 * Math.log(s)) / s)
+      _nextGaussian = v2 * multiplier
+      _hasNextGaussian = true
+      return mean + standardDerivation * (v1 * multiplier)
+    }
+  }
+
   return {
     rnd,
     chance,
@@ -78,5 +128,8 @@ export const PRNG = (hash) => {
     pickSome,
     weighted,
     shuffleArray,
+    onCircle,
+    insideCircle,
+    gaussian,
   }
 }
