@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "go": "node init.js",
     "start": "rm -rf dist && parcel Project/index.html --port 8888 --no-hmr",
     "build": "rm -rf build && parcel build Project/index.html --no-source-maps --dist-dir build && node ./build.js"
   },
@@ -18,5 +19,8 @@
     "prettier": "2.5.1",
     "split-file": "^2.3.0",
     "terser": "^5.9.0"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.4"
   }
 }
